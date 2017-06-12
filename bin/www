@@ -1,0 +1,113 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+const app = require('../app');
+const debug = require('debug')('ttel-server:server');
+const https = require('https');
+const http = require('http');
+const os = require('os');
+const underscore = require('underscore');
+const fs = require('fs-extra');
+
+//引入配置文件
+const enviConfig = require('../config/envi_config');
+
+const ipAddr = getHostIPAddress();
+enviConfig.hostURL = 'https://' + ipAddr + ':' + enviConfig.port;
+
+console.log('serverDir: ' + enviConfig.serverDir);
+console.log('hostURL: ' + enviConfig.hostURL);
+
+/**
+ * Create HTTPS server.
+ */
+const server = https.createServer({
+
+    key: fs.readFileSync(enviConfig.serverDir + '/cer/server.key', 'utf8'),
+    cert: fs.readFileSync(enviConfig.serverDir + '/cer/server.cer', 'utf8')
+}, app.callback());
+
+const httpServer =  http.createServer( app.callback());
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(normalizePort(enviConfig.port));
+server.on('error', onError);
+server.on('listening', onListening);
+
+httpServer.listen(normalizePort(enviConfig.httpPort));
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+    const port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port;
+    }
+
+    return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    const bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+    var addr = httpServer.address();
+    var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+}
+
+
+function getHostIPAddress() {
+
+    return underscore.chain(os.networkInterfaces())
+        .values().flatten().find(function (iface) {
+            return iface.family === 'IPv4' && iface.internal === false;
+        }).value().address;
+}
+

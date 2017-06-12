@@ -1,0 +1,44 @@
+{
+  "apps": [
+    {
+      "name": "ttel-pro",
+      "script": "bin/www",
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "error_file": "logs/pro/error-error.log",
+      "out_file": "logs/pro/node-app.stdout.log",
+      "pid_file": "pids/pro/node-geo-api.pid",
+      "instances": 1,
+      "min_uptime": "200s",
+      "max_restarts": 10,
+      "max_memory_restart": "550M",
+      "cron_restart": "1 0 * * *",
+      "watch": false,
+      "merge_logs": true,
+      "exec_mode":"fork",
+      "env": {
+        "NODE_ENV": "pro"
+      },
+      "vizion": false
+    },
+    {
+      "name": "ttel-dev",
+      "script": "bin/www",
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "error_file": "logs/dev/error-error.log",
+      "out_file": "logs/dev/node-app.stdout.log",
+      "pid_file": "pids/dev/node-geo-api.pid",
+      "instances": 1,
+      "min_uptime": "200s",
+      "max_restarts": 10,
+      "max_memory_restart": "550M",
+      "cron_restart": "1 0 * * *",
+      "watch": false,
+      "merge_logs": true,
+      "exec_mode":"fork",
+      "env": {
+        "NODE_ENV": "dev"
+      },
+      "vizion": false
+    }
+  ]
+}

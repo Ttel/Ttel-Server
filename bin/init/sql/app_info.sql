@@ -1,0 +1,16 @@
+--DROP TABLE IF EXISTS `app_info`;
+--CREATE TABLE IF NOt`app_info` (
+--  `itemId` varchar(256) NOT NULL COMMENT '包的ID, 每次上传的包都会生成一个唯一的ID，即使传的是同一个ipa或者apk文件',
+--  `prodType` int NOT NULL COMMENT '产品类型码	',
+--  `envType` int NOT NULL COMMENT '包环境类型 1：SIT 2：UAT 3：PRO',
+--  `platform` int NOT NULL COMMENT '平台 1：iOS 2：Android',
+--  `fileSize` varchar(256) NOT NULL COMMENT '主键',
+--  `buildVersion` varchar(256) NOT NULL COMMENT '编译版本号 2017040503',
+--  `displayName` varchar(256) NOT NULL COMMENT '产品名称',
+--  `version` varchar(256) NOT NULL COMMENT '产品版本',
+--  `updatedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+--  `createdDate` datetime NOT NULL COMMENT '包上传时间',
+--  `appIdentifier` varchar(256) NOT NULL COMMENT 'iOS为bundleID, Android为包名',
+--  `changeLog` text  COMMENT '更新日志'
+--);
+

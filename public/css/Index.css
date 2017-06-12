@@ -1,0 +1,27 @@
+
+body {
+   text-align: center;
+   background: rgba(237,244,252,0.8);
+}
+
+.top_title{
+	color: rgba(40,135,240,0.9);
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.qr_code_img{
+	width: 140Px;
+	height: 140px;
+}
+
+.download_btn{
+	width: 120px;
+	height: 30px;
+	
+	background: rgba(35,150,255,0.6);
+	border-radius: 5px;
+	border-style: none;
+	
+	color: white;
+}
